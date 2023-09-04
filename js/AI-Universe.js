@@ -9,7 +9,17 @@ const displayData = (techCards) => {
     console.log(techCards);
 
     const cardsContainer = document.getElementById('card-container');
-    
+    // ---------------------------------------------------------
+    // display 6 cards 
+  /*   const showAll = document.getElementById('show-all');
+    if(techCards.length > 6){
+        techCards = techCards.slice(0, 6);
+        showAll.classList.remove('d-none');
+    }
+    else{
+        showAll.classList.add('d-none');
+    } */
+    // ---------------------------------------------------
     techCards.forEach(techCard => {
         console.log(techCard);
         const cardDiv = document.createElement('div');
@@ -45,6 +55,7 @@ const displayData = (techCards) => {
     // loader stop 
     toggleSpinner(false);
 }
+
 
 // -----------------Modal Data ---------------------------------
 const loadModalData = async (id) =>{
@@ -138,7 +149,7 @@ const displayModalData = (modalData) =>{
     `
 }
 
-toggleSpinner(true)
+
 // function for spinner
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader')
@@ -152,3 +163,4 @@ const toggleSpinner = isLoading => {
 
 loadData();
 // start loader
+toggleSpinner(true)
