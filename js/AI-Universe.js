@@ -1,30 +1,50 @@
-const loadData = async () => {
+const loadData = async (dataLimit) => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`
     const response = await fetch(url);
     const data = await response.json();
-    displayData(data.data.tools);
+    displayData(data.data.tools, dataLimit);
 }
 
-const displayData = (techCards) => {
-    console.log(techCards);
+const displayData = (techCards, dataLimit) => {
+    console.log(techCards, dataLimit);
 
     const cardsContainer = document.getElementById('card-container');
-    // ---------------------------------------------------------
-    // display 6 cards 
-  /*   const showAll = document.getElementById('show-all');
-    if(techCards.length > 6){
-        techCards = techCards.slice(0, 6);
-        showAll.classList.remove('d-none');
-    }
-    else{
-        showAll.classList.add('d-none');
-    } */
-    // ---------------------------------------------------
+    cardsContainer.innerHTML = '';
+
+    // display first 6 data-------------------------------
+    /* const showAll = document.getElementById('show-all');
+        if (dataLimit && techCards.length > 6) {
+            techCards = techCards.slice(0, 6);
+            showAll.classList.remove('d-none');
+
+        }
+        else {
+            showAll.classList.add('d-none');
+        } */
+    /* const showFirstData = () => {
+        const showAll = document.getElementById('show-all');
+        if (dataLimit && techCards.length > 6) {
+            techCards = techCards.slice(0, 6);
+            showAll.classList.remove('d-none');
+
+        }
+        else {
+            showAll.classList.add('d-none');
+        }
+        // return console.log(techCards);
+        return techCards;
+    } 
+    // call first data
+    showFirstData();
+    */
+
+    
+    // ---------------individual card display----------
     techCards.forEach(techCard => {
         console.log(techCard);
         const cardDiv = document.createElement('div');
         cardDiv.classList.add('col');
-       
+
         cardDiv.innerHTML = `
             <div class="card h-100">
                 <img  src="${techCard.image}" class="card-img-top" alt="...">
@@ -56,9 +76,19 @@ const displayData = (techCards) => {
     toggleSpinner(false);
 }
 
+/* const process = (dataLimit) =>{
+    loadData(dataLimit);
+}
 
-// -----------------Modal Data ---------------------------------
-const loadModalData = async (id) =>{
+document.getElementById('btn-showAll').addEventListener('click', function(){
+    console.log("clicked");
+    process(6);
+}) */
+
+
+
+// -----------------Modal Data---------------------------------
+const loadModalData = async (id) => {
     console.log(id);
 
     const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
@@ -67,7 +97,7 @@ const loadModalData = async (id) =>{
     displayModalData(data.data);
 }
 
-const displayModalData = (modalData) =>{
+const displayModalData = (modalData) => {
     console.log(modalData);
 
     const cardBodyContainer = document.getElementById('card-body-container');
@@ -78,7 +108,7 @@ const displayModalData = (modalData) =>{
             <div class="row row-cols-1 row-cols-md-3 g-4 my-3">
             <div class="col">
                 <div class="card border border-0">
-                    <div class="card-body mx-auto ">
+                    <div class="card-body px-1">
                         <h5 class = "fw-bold text-center text-success">${modalData.pricing[0].price}</h5>
                         <h5 class = "fw-bold text-center text-success">${modalData.pricing[0].plan}</h5>
                     </div> 
@@ -87,7 +117,7 @@ const displayModalData = (modalData) =>{
 
             <div class="col">
                 <div class="card border border-0">
-                    <div class="card-body">
+                    <div class="card-body px-1">
                     <h5 class = "fw-bold text-center text-warning">${modalData.pricing[1].price}</h5>
                     <h5 class = "fw-bold text-center text-warning">${modalData.pricing[1].plan}</h5>
                     </div> 
@@ -96,7 +126,7 @@ const displayModalData = (modalData) =>{
 
             <div class="col">
                 <div class="card border border-0">
-                    <div class="card-body text-center px-4">
+                    <div class="card-body px-2">
                     <h5 class = "fw-bold text-center text-danger">${modalData.pricing[2].price}</h5>
                     <h5 class = "fw-bold text-center text-danger">${modalData.pricing[2].plan}</h5>
                     </div>
@@ -153,10 +183,10 @@ const displayModalData = (modalData) =>{
 // function for spinner
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader')
-    if(isLoading){
+    if (isLoading) {
         loaderSection.classList.remove('d-none');
     }
-    else{
+    else {
         loaderSection.classList.add('d-none');
     }
 }
